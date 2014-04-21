@@ -85,7 +85,8 @@ final class StaticWordLibrary extends WordLibrary {
         "unsigned",
         "traditional",
         "apple",
-        "baseball"};
+        "baseball"
+    };
 /*
     private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
@@ -159,8 +160,8 @@ final class StaticWordLibrary extends WordLibrary {
      * @param idx index of required word
      * @return word at that index in its scrambled form
      */
-    public String getScrambledWord(int idx) {
-        String c = WORD_LIST[idx];
+   public String getScrambledWord(int idx) {
+      /* String c = WORD_LIST[idx];
         Random rnd = new Random();
         String[] a = new String[c.length()];
         char f = 0;
@@ -186,8 +187,38 @@ final class StaticWordLibrary extends WordLibrary {
             e += b[i];
         }
 
-       
+       */
+       String e = ScrambledWord(WORD_LIST[idx]);
         return e;
+    }
+
+    public String ScrambledWord(String st){
+         String c =st;
+        Random rnd = new Random();
+        String[] a = new String[c.length()];
+        char f = 0;
+        String g = "";
+        String[] b = new String[100];
+        String e = "";
+        for(int i = 0; i<c.length();i++){
+            f=c.charAt(i);
+            a[i] = String.valueOf(f);
+        }
+        for(int i = 0; i<c.length();i++){
+            int ran = rnd.nextInt(c.length());
+            int r = ran;
+            if(a[r]==null)i--;
+            else {
+            g = a[r];
+            b[i]=g;
+            a[r]=null;
+            }
+          
+        }
+        for(int i = 0; i<c.length(); i++){
+            e += b[i];
+        }
+        return e ;
     }
 
     /**

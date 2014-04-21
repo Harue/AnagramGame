@@ -35,6 +35,8 @@ import com.toy.anagrams.lib.WordLibrary;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.Random;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -141,6 +143,11 @@ public class Anagrams extends JFrame {
 
         scrambledWord.setEditable(false);
         scrambledWord.setColumns(20);
+        scrambledWord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scrambledWordActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -158,6 +165,11 @@ public class Anagrams extends JFrame {
         mainPanel.add(guessLabel, gridBagConstraints);
 
         guessedWord.setColumns(20);
+        guessedWord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guessedWordActionPerformed1(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -213,6 +225,11 @@ public class Anagrams extends JFrame {
         mainPanel.add(levelLabel, gridBagConstraints);
 
         selectLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Level 1", "Level 2", "Level 3" }));
+        selectLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectLevelActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -262,8 +279,27 @@ public class Anagrams extends JFrame {
         getRootPane().setDefaultButton(guessButton);
 
         guessedWord.requestFocusInWindow();
+     String st="";
+     st=selectLevel.getSelectedItem().toString();
+     
+     if(st.equals("Level 2")) {
+         String st2=wordLibrary.getScrambledWord(wordIdx);//System.out.println(st2);
+       scrambledWord.setText(ScrambledWord(st2));//System.out.println(ScrambledWord(st2));
+        // System.out.print("l 2");
     }//GEN-LAST:event_nextTrialActionPerformed
-
+     else if(st.equals("Level 3")) {
+         String st2=wordLibrary.getScrambledWord(wordIdx);//System.out.println(st2);
+         String st3 = ScrambledWord(st2);//System.out.println(st3);
+       scrambledWord.setText(ScrambledWord(st3));//System.out.println(ScrambledWord(st3));
+         //System.out.print("l 3");
+    }
+     
+     else {
+        scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        //System.out.println("****");
+    }
+    }
+    
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
@@ -276,7 +312,7 @@ public class Anagrams extends JFrame {
             feedbackLabel.setText("Incorrect! Try again!");
             guessedWord.setText("");
         }
-
+       
         guessedWord.requestFocusInWindow();
     }//GEN-LAST:event_guessedWordActionPerformed
 
@@ -284,6 +320,54 @@ public class Anagrams extends JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitForm
 
+    private void scrambledWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scrambledWordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scrambledWordActionPerformed
+
+    private void selectLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectLevelActionPerformed
+    JComboBox combo = new JComboBox();
+      int index = combo.getSelectedIndex();
+      if(index ==0)  scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+      else if(index == 1){
+         // String st2=ScrambledWord(wordLibrary.getScrambledWord(wordIdx));
+          String st=wordLibrary.getScrambledWord(wordIdx);System.out.println(st);
+       scrambledWord.setText(ScrambledWord(st));System.out.println(ScrambledWord(st));
+      }// TODO add your handling code here:
+    }//GEN-LAST:event_selectLevelActionPerformed
+
+    private void guessedWordActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guessedWordActionPerformed1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_guessedWordActionPerformed1
+
+    public String ScrambledWord(String st){
+         String c =st;
+        Random rnd = new Random();
+        String[] a = new String[c.length()];
+        char f = 0;
+        String g = "";
+        String[] b = new String[100];
+        String e = "";
+        for(int i = 0; i<c.length();i++){
+            f=c.charAt(i);
+            a[i] = String.valueOf(f);
+        }
+        for(int i = 0; i<c.length();i++){
+            int ran = rnd.nextInt(c.length());
+            int r = ran;
+            if(a[r]==null)i--;
+            else {
+            g = a[r];
+            b[i]=g;
+            a[r]=null;
+            }
+          
+        }
+        for(int i = 0; i<c.length(); i++){
+            e += b[i];
+        }
+        return e ;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JPanel buttonsPanel;
